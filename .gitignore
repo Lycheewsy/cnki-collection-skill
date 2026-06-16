@@ -1,0 +1,49 @@
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# macOS system files
+.DS_Store
+
+# IDE settings
+.vscode/
+.idea/
+
+# Environment variables and local configs
+.env
+.env.local
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+
+# CNKI output files
+outputs/cnki_fulltext_output/
+outputs/test_run/
+cnki_fulltext_output/
+
+# Keep outputs folder structure
+!outputs/.gitkeep
+
+# Collected corpus files
+*.txt
+*.csv
+
+# Keep project documents
+!README.md
+!SKILL.md
+!VERSION.md
+!requirements.txt
+!run_skill.py
+!examples/*.md
+!tests/*.md
