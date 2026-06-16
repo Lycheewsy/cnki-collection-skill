@@ -33,6 +33,11 @@ The skill produces:
 2. A CSV file named `failed_and_skipped_articles.csv`.
 3. Console logs showing success, skipped, and failed counts.
 
+``markdown
+## Entry Point
+
+- `run_skill.py`
+
 ## Main Tool
 
 - `tools/cnki_fulltext_scraper.py`

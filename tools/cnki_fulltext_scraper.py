@@ -6,6 +6,7 @@ import re
 import time
 import random
 import logging
+import argparse
 from pathlib import Path
 from dataclasses import dataclass
 from typing import Optional
@@ -62,6 +63,61 @@ CONFIG = {
     # ── 页面加载超时（秒）──────────────────────────────────────
     "page_timeout": 25,
 }
+def parse_args():
+    parser = argparse.ArgumentParser(
+        description="CNKI CSSCI full-text collection tool"
+    )
+
+    parser.add_argument(
+        "--query",
+        type=str,
+        default=CONFIG["search_query"],
+        help="CNKI professional search query"
+    )
+
+    parser.add_argument(
+        "--db-code",
+        type=str,
+        default=CONFIG["db_code"],
+        help="CNKI database code"
+    )
+
+    parser.add_argument(
+        "--max-pages",
+        type=int,
+        default=CONFIG["max_pages"],
+        help="Maximum number of result pages to process"
+    )
+
+    parser.add_argument(
+        "--output-dir",
+        type=str,
+        default=CONFIG["output_dir"],
+        help="Output directory for collected full texts"
+    )
+
+    parser.add_argument(
+        "--delay-min",
+        type=float,
+        default=CONFIG["delay_min"],
+        help="Minimum delay between article requests"
+    )
+
+    parser.add_argument(
+        "--delay-max",
+        type=float,
+        default=CONFIG["delay_max"],
+        help="Maximum delay between article requests"
+    )
+
+    parser.add_argument(
+        "--fulltext-timeout",
+        type=int,
+        default=CONFIG["fulltext_timeout"],
+        help="Timeout for loading HTML full text"
+    )
+
+    return parser.parse_args()
 
 # ═══════════════════════════════════════════════════════════════
 
@@ -396,9 +452,19 @@ def save_fulltext(art: ArticleInfo, fulltext: str, out_dir: Path):
 
 
 def main():
-    cfg = CONFIG
-    out_dir = Path(cfg["output_dir"])
+    args = parse_args()
 
+    cfg = CONFIG.copy()
+    cfg["search_query"] = args.query
+    cfg["db_code"] = args.db_code
+    cfg["max_pages"] = args.max_pages
+    cfg["output_dir"] = args.output_dir
+    cfg["delay_min"] = args.delay_min
+    cfg["delay_max"] = args.delay_max
+    cfg["fulltext_timeout"] = args.fulltext_timeout
+
+    out_dir = Path(cfg["output_dir"])
+    out_dir.mkdir(parents=True, exist_ok=True)
     driver = create_driver()
     wait = WebDriverWait(driver, cfg["page_timeout"])
 

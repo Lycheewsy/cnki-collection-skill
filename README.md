@@ -37,7 +37,38 @@ pip install -r requirements.txt
 Run:
 
 ```bash
-python tools/cnki_fulltext_scraper.py
+python3 run_skill.py
+## Usage
+
+Run the skill:
+
+```bash
+python3 run_skill.py
+```
+
+After the browser opens, manually log in to CNKI. Then return to the terminal and press Enter.
+
+## Recommended Usage
+
+Run one page with safer delay settings:
+
+```bash
+python3 run_skill.py --max-pages 1 --delay-min 6 --delay-max 10
+```
+
+Specify an output directory:
+
+```bash
+python3 run_skill.py --max-pages 1 --output-dir outputs/test_run
+```
+
+Use a custom CNKI professional search query:
+
+```bash
+python3 run_skill.py \
+  --query "SU%='马克思主义' AND FT='术语' AND YE<2018" \
+  --max-pages 1
+```
 ```
 
 After the browser opens, manually log in to CNKI. Then return to the terminal and press Enter.
